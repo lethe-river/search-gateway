@@ -1,0 +1,59 @@
+[[queries]]
+id = 1
+language = "en"
+categories = ["general"]
+query = "rust programming language official documentation"
+
+[[queries]]
+id = 2
+language = "zh"
+categories = ["general"]
+query = "北京天气预报"
+
+[[queries]]
+id = 3
+language = "en"
+categories = ["general"]
+query = "linux kernel scheduler documentation"
+
+[[queries]]
+id = 4
+language = "zh"
+categories = ["general"]
+query = "中国高速铁路发展现状"
+
+[[queries]]
+id = 5
+language = "en"
+categories = ["general", "it"]
+query = "rust reqwest rustls example"
+
+[[queries]]
+id = 6
+language = "zh"
+categories = ["general", "it"]
+query = "Rust 生命周期示例"
+
+[[queries]]
+id = 7
+language = "en"
+categories = ["general", "it"]
+query = "sqlite WAL mode concurrent readers"
+
+[[queries]]
+id = 8
+language = "en"
+categories = ["general", "science"]
+query = "retrieval augmented generation survey"
+
+[[queries]]
+id = 9
+language = "zh"
+categories = ["general", "science"]
+query = "大语言模型幻觉综述"
+
+[[queries]]
+id = 10
+language = "en"
+categories = ["general"]
+query = "SearXNG json api documentation"

@@ -1,0 +1,10 @@
+/target
+*.log
+*.pdb
+/config.toml
+/config.local.toml
+*.local.toml
+/sessions.json
+.claude/settings.local.json
+/deploy/searxng/.env
+/deploy/searxng/core-config/settings.yml

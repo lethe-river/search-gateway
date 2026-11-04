@@ -1,0 +1,33 @@
+[package]
+name = "search-gateway"
+version = "0.2.0"
+edition = "2024"
+description = "Retrieval-only MCP gateway for Tavily, Firecrawl and SearXNG"
+license = "MIT"
+
+[dependencies]
+rmcp = { version = "=3.8.0", features = ["server", "transport-io"] }
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.12.28", default-features = false, features = ["json", "gzip", "brotli", "charset", "http2", "rustls-tls"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "1"
+schemars = "1"
+url = "2"
+thiserror = "2"
+anyhow = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+tracing-appender = "0.2"
+scraper = "0.29"
+dom_smoothie = "0.19"
+htmd = "0.5"
+encoding_rs = "0.8"
+regex = "1"
+uuid = { version = "1", features = ["v4"] }
+chrono = { version = "0.4", default-features = false, features = ["std", "clock"] }
+
+[dev-dependencies]
+rmcp = { version = "=3.8.0", features = ["client", "transport-child-process"] }
+wiremock = "0.6"
+tempfile = "3"

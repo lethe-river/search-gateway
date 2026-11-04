@@ -1,0 +1,94 @@
+# search-gateway example configuration.
+#
+# Copy this file to the platform default path, or pass it with --config:
+#   Windows:   %APPDATA%\search-gateway\config.toml
+#   Linux/macOS: ~/.config/search-gateway/config.toml
+#   Any OS:    search-gateway --config /path/to/config.toml
+#   Or set:    SEARCH_GATEWAY_CONFIG=/path/to/config.toml
+#
+# Keys can be literal values or env:NAME. One env var may contain several keys
+# separated by commas, semicolons, or whitespace:
+#   TAVILY_API_KEY="tvly-aaa,tvly-bbb,tvly-ccc"
+#
+# Do not commit a config that contains real keys.
+
+[tavily]
+enabled = true
+base_url = "https://api.tavily.com"
+keys = ["env:TAVILY_API_KEY"]
+search_depth = "basic"
+timeout_ms = 10000
+
+[firecrawl]
+enabled = true
+base_url = "https://api.firecrawl.dev"
+keys = ["env:FIRECRAWL_API_KEY"]
+timeout_ms = 10000
+
+[searxng]
+# Last-resort search path. Disabled by default so the example works without
+# a local SearXNG deployment. Enable it if you run one.
+enabled = false
+base_url = "http://127.0.0.1:12310"
+connect_timeout_ms = 2000
+request_timeout_ms = 8000
+server_timeout_s = 6
+categories = ["general"]
+language = "auto"
+max_results = 10
+required_engines = []
+disabled_engines = []
+
+[search]
+budget_ms = 30000
+default_max_results = 5
+snippet_max_chars = 800
+response_max_chars = 30000
+reserve_last_resort_ms = 8000
+
+[fetch]
+budget_ms = 30000
+max_chars_default = 12000
+max_chars_limit = 200000
+specialist_timeout_ms = 10000
+generic_timeout_ms = 8000
+firecrawl_timeout_ms = 12000
+# Only enable for a deliberate local/private page fetch.
+allow_private_hosts = false
+
+[map]
+budget_ms = 20000
+default_max_results = 50
+max_results_limit = 200
+response_max_chars = 30000
+tavily_timeout_ms = 10000
+firecrawl_timeout_ms = 12000
+
+[keyring]
+auth_cooldown_secs = 600
+quota_cooldown_secs = 3600
+rate_limit_cooldown_secs = 60
+transport_retry = 1
+
+[circuit]
+failure_threshold = 3
+cooldown_secs = 300
+misconfig_cooldown_secs = 600
+
+[cache]
+max_sessions = 32
+ttl_secs = 600
+max_sources_per_session = 200
+max_pages = 64
+page_ttl_secs = 600
+persist = true
+
+[rate]
+max_calls_per_minute = 60
+
+[doctor]
+fetch_probe_url = "https://example.com/"
+
+[log]
+level = "info"
+file = false

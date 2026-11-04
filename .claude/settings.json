@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__search-gateway__*",
+      "Skill(search-gateway)"
+    ]
+  }
+}

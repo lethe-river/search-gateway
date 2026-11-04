@@ -1,0 +1,62 @@
+# Live, zero-cost verification config: SearXNG only.
+# Tavily and Firecrawl are explicitly disabled so `--selftest` exercises the
+# last-resort path without spending credits.
+
+[tavily]
+enabled = false
+
+[firecrawl]
+enabled = false
+
+[searxng]
+enabled = true
+base_url = "http://127.0.0.1:12310"
+connect_timeout_ms = 2000
+request_timeout_ms = 8000
+server_timeout_s = 6
+categories = ["general"]
+language = "auto"
+max_results = 10
+
+[search]
+budget_ms = 30000
+default_max_results = 5
+snippet_max_chars = 800
+response_max_chars = 30000
+reserve_last_resort_ms = 8000
+
+[fetch]
+budget_ms = 20000
+max_chars_default = 12000
+max_chars_limit = 200000
+
+[map]
+budget_ms = 20000
+default_max_results = 50
+max_results_limit = 200
+response_max_chars = 30000
+
+[keyring]
+auth_cooldown_secs = 600
+quota_cooldown_secs = 3600
+rate_limit_cooldown_secs = 60
+transport_retry = 1
+
+[circuit]
+failure_threshold = 3
+cooldown_secs = 300
+misconfig_cooldown_secs = 600
+
+[cache]
+max_sessions = 32
+ttl_secs = 600
+max_sources_per_session = 200
+max_pages = 64
+page_ttl_secs = 600
+
+[doctor]
+fetch_probe_url = "https://example.com/"
+
+[log]
+level = "warn"
+file = false
