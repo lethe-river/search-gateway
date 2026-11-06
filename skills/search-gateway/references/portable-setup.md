@@ -105,7 +105,7 @@ base_url = "http://127.0.0.1:12310"
 ```
 
 本机的 SearXNG 端口、Firecrawl rotator 版本、Clash fake-IP 例外等，写在
-`references/local-environment.example.md` 里供参考；另一台机器不要继承这些值。
+本地的 `references/local-environment.md`（不随仓库分发，自己建）；另一台机器不要继承这些值。
 
 ## 5. 注册 MCP
 
@@ -157,7 +157,6 @@ Linux/macOS：
 ~/.claude/skills/search-gateway/references/answer-quality.md
 ~/.claude/skills/search-gateway/references/portable-setup.md
 ~/.claude/skills/search-gateway/references/search-routing-policy.md
-~/.claude/skills/search-gateway/references/local-environment.example.md
 ```
 
 `search-routing-policy.md` 只是指向 `agent-prompt.md` 的指针，不是第二份策略；不要在两处
