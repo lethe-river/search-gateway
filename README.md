@@ -68,12 +68,26 @@
 零成本兜底：用 [`deploy/searxng/`](deploy/searxng/) 的 compose 在本机起一个 SearXNG，
 付费链全挂时仍有结果，见 [`docs/searxng-fallback.md`](docs/searxng-fallback.md)。
 
-## 让 agent 用对这套工具（skill）
+## Agent 集成（可移植）
 
-仓库自带一份 skill 与全局提示词：让「检索 → 引用」的标准跟着工具一起走，而不是每台机器各写一套。
+仓库自带 skill 和标准提示词，目标是在另一台电脑、本机另一个 agent 或另一个 profile 上使用
+同一套检索与引用标准，而不是每台机器各写一套。
+
+| 文件 | 作用 |
+| --- | --- |
+| [`skills/search-gateway/SKILL.md`](skills/search-gateway/SKILL.md) | 检索/引用工作流、工具参考、错误处理 |
+| [`skills/search-gateway/references/agent-prompt.md`](skills/search-gateway/references/agent-prompt.md) | 全局提示词 §1/§1b 的唯一来源 |
+| [`skills/search-gateway/references/answer-quality.md`](skills/search-gateway/references/answer-quality.md) | 引用审计清单与评分标准 |
+| [`skills/search-gateway/references/portable-setup.md`](skills/search-gateway/references/portable-setup.md) | 跨机器安装、验证、漂移检查 |
+| [`skills/search-gateway/scripts/install.ps1`](skills/search-gateway/scripts/install.ps1) / [`install.sh`](skills/search-gateway/scripts/install.sh) | 把 skill 安装/覆盖到用户目录 |
+| [`config.example.toml`](config.example.toml) | 无密钥配置模板 |
+
+`references/search-routing-policy.md` 只是指向 `agent-prompt.md` 的指针，不维护第二份策略。
+
+安装 skill：
 
 ```powershell
-# Windows：安装到 ~/.claude/skills/search-gateway
+# Windows
 .\skills\search-gateway\scripts\install.ps1 -Force
 ```
 
@@ -82,17 +96,19 @@
 ./skills/search-gateway/scripts/install.sh --force
 ```
 
-| 文件 | 作用 |
-| --- | --- |
-| [`SKILL.md`](skills/search-gateway/SKILL.md) | 检索/引用工作流、工具参考、错误处理 |
-| [`references/agent-prompt.md`](skills/search-gateway/references/agent-prompt.md) | 全局提示词 §1/§1b 的唯一来源 |
-| [`references/answer-quality.md`](skills/search-gateway/references/answer-quality.md) | 引用审计清单与 A–D 评分 |
-| [`references/portable-setup.md`](skills/search-gateway/references/portable-setup.md) | 跨机器安装、验证、漂移检查 |
+然后把 `agent-prompt.md` 的 §1/§1b 复制进 `~/.claude/CLAUDE.md`，按 `portable-setup.md`
+注册 MCP、配置权限并运行 `doctor`。**标准层只改仓库**：路径、端口、key、代理网段放在本地
+`config.toml`，不要写进 skill 或全局提示词。
 
-装完后把 `agent-prompt.md` 的 §1/§1b 复制进 `~/.claude/CLAUDE.md`。
+**发布组合**：release 二进制（工具描述与字段）、`~/.claude/skills/search-gateway`、
+`~/.claude/CLAUDE.md` 的 §1/§1b 必须同版。改仓库后重新构建、重装 skill、同步全局提示词；
+只更新一层会出现「skill 有硬门、二进制或提示词没有」的漂移。
 
-**标准层只改仓库**：路径、端口、key 放在本地 `config.toml`，不要写进 skill 或全局提示词。
-发布时二进制、skill、全局提示词必须同版——只更新一层会出现「skill 有硬门、二进制或提示词没有」的漂移。
+验收按 `answer-quality.md` 的 8 项检查，不只看「有没有来源列表」。硬门是数字/日期覆盖、
+URL 溯源、来源身份、抓取质量、独立性；另外检查冲突、检索记录、URL 精确性。任何一项不过，
+不算 A 级。
+
+一次真实任务的复盘见 [`docs/validation.md`](docs/validation.md)。
 
 ## 五个工具
 
