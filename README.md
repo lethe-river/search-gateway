@@ -68,6 +68,32 @@
 零成本兜底：用 [`deploy/searxng/`](deploy/searxng/) 的 compose 在本机起一个 SearXNG，
 付费链全挂时仍有结果，见 [`docs/searxng-fallback.md`](docs/searxng-fallback.md)。
 
+## 让 agent 用对这套工具（skill）
+
+仓库自带一份 skill 与全局提示词：让「检索 → 引用」的标准跟着工具一起走，而不是每台机器各写一套。
+
+```powershell
+# Windows：安装到 ~/.claude/skills/search-gateway
+.\skills\search-gateway\scripts\install.ps1 -Force
+```
+
+```bash
+# Linux/macOS
+./skills/search-gateway/scripts/install.sh --force
+```
+
+| 文件 | 作用 |
+| --- | --- |
+| [`SKILL.md`](skills/search-gateway/SKILL.md) | 检索/引用工作流、工具参考、错误处理 |
+| [`references/agent-prompt.md`](skills/search-gateway/references/agent-prompt.md) | 全局提示词 §1/§1b 的唯一来源 |
+| [`references/answer-quality.md`](skills/search-gateway/references/answer-quality.md) | 引用审计清单与 A–D 评分 |
+| [`references/portable-setup.md`](skills/search-gateway/references/portable-setup.md) | 跨机器安装、验证、漂移检查 |
+
+装完后把 `agent-prompt.md` 的 §1/§1b 复制进 `~/.claude/CLAUDE.md`。
+
+**标准层只改仓库**：路径、端口、key 放在本地 `config.toml`，不要写进 skill 或全局提示词。
+发布时二进制、skill、全局提示词必须同版——只更新一层会出现「skill 有硬门、二进制或提示词没有」的漂移。
+
 ## 五个工具
 
 | 工具 | 作用 | 常用参数 |
